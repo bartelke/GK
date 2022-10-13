@@ -61,12 +61,11 @@ def update_viewport(window, width, height):
 
 
 def main():
-    # x = input("Enter x value: ")
-    # y = input("Enter y value: ")
-    # a = input("Enter length of one side: ")
-    # b = input("Enter length of the second side: ")
-    # print("Generating figure in (" + x + ", " + y + "), size: " +
-    #       b + " x " + a + " x " + b + " x " + a)
+    x = int(input("Enter x value: "))
+    y = int(input("Enter y value: "))
+    a = int(input("Enter length of one side: "))
+    b = int(input("Enter length of the second side: "))
+    print("Generating figure...")
 
     if not glfwInit():
         sys.exit(-1)
@@ -82,7 +81,7 @@ def main():
 
     startup()
     while not glfwWindowShouldClose(window):
-        render(glfwGetTime(), 0, 0, 50, 20)
+        render(glfwGetTime(), x, y, a, b)
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
