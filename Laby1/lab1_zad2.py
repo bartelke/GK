@@ -22,17 +22,17 @@ def render(time, x, y, a, b):
     # first triangle:
     glBegin(GL_TRIANGLES)
     glColor3f(1.0, 0.0, 0.0)
-    glVertex2f(x-a/2, y-b/2)
-    glVertex2f(x-a/2, y+b/2)
-    glVertex2f(x+b/2, y-b/2)
+    glVertex2f(x, y)
+    glVertex2f(x+a, y)
+    glVertex2f(x, y+b)
     glEnd()
 
     # second triangle:
     glBegin(GL_TRIANGLES)
     glColor3f(1.0, 0.0, 0.0)
-    glVertex2f(x+a/2, y+b/2)
-    glVertex2f(x+a/2, y-b/2)
-    glVertex2f(x-b/2, y+b/2)
+    glVertex2f(x+a, y)
+    glVertex2f(x+a, y+b)
+    glVertex2f(x, y+b)
     glEnd()
 
     glFlush()
@@ -82,7 +82,7 @@ def main():
 
     startup()
     while not glfwWindowShouldClose(window):
-        render(glfwGetTime(), 0, 0, 50, 50)
+        render(glfwGetTime(), 0, 0, 50, 20)
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
