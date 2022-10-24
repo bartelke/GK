@@ -88,7 +88,7 @@ def main():
         u = i/sqrtN
         for j in range(sqrtN):
             v = j/sqrtN
-            print("(", u, " ", v, ")")
+            #print("(", u, " ", v, ")")
             x = (-90*pow(u, 5) + 225*pow(u, 4) - 270*pow(u, 3) +
                  180*pow(u, 2) - 45*u)*math.cos(math.pi*v)
             y = (160*pow(u, 4) - 320*pow(u, 3) + 160*pow(u, 2) - 5)

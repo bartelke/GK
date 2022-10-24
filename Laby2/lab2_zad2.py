@@ -42,14 +42,14 @@ def axes():
     glEnd()
 
 
-def render(time, tab):
+def render(time, tab, N):
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
     spin(time * 180 / 3.1415)
 
     glColor3f(1.0, 0.9, 0.0)
     glBegin(GL_POINTS)
-    for i in range(10000):
+    for i in range(N):
         glVertex3f(tab[i][0], tab[i][1], tab[i][2])
     glEnd()
     axes()
@@ -78,7 +78,7 @@ def update_viewport(window, width, height):
 
 
 def main():
-    N = 10000
+    N = 25
     sqrtN = int(math.sqrt(N))
     # tab = [[0] * 3 for i in range(N) for j in range(N)]
     tab = []
@@ -86,7 +86,7 @@ def main():
     # obliczanie X, Y, Z:
     for i in range(sqrtN+1):
         u = i/sqrtN
-        for j in range(sqrtN+1):
+        for j in range(sqrtN):
             v = j/sqrtN
             #print("(", u, " ", v, ")")
             x = (-90*pow(u, 5) + 225*pow(u, 4) - 270*pow(u, 3) +
@@ -99,6 +99,13 @@ def main():
             point.append(y)
             point.append(z)
             tab.append(point)
+
+    # zarys petelki do odczytu indeksow:
+    # for i in range(sqrtN + 1):
+    #     u = i
+    #     for j in range(sqrtN):
+    #         v = j % sqrtN
+    #         print("(", u, " ", v, ")")
 
     if not glfwInit():
         sys.exit(-1)
@@ -114,7 +121,7 @@ def main():
 
     startup()
     while not glfwWindowShouldClose(window):
-        render(glfwGetTime(), tab)
+        render(glfwGetTime(), tab, N)
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
