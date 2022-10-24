@@ -8,6 +8,12 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 
 
+def spin(angle):
+    glRotatef(angle, 1.0, 0.0, 0.0)
+    glRotatef(angle, 0.0, 1.0, 0.0)
+    glRotatef(angle, 0.0, 0.0, 1.0)
+
+
 def startup():
     update_viewport(None, 400, 400)
     glClearColor(0.0, 0.0, 0.0, 1.0)
@@ -36,12 +42,16 @@ def axes():
     glEnd()
 
 
-def render(time, tab):
+def render(time, tab, N):
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
+    spin(time * 180 / 3.1415)
 
-    for i in range(400):
-        print(tab[i][0], " ", tab[i][1], " ", tab[i][2])
+    glColor3f(1.0, 0.9, 0.0)
+    glBegin(GL_POINTS)
+    for i in range(N):
+        glVertex3f(tab[i][0], tab[i][1], tab[i][2])
+    glEnd()
     axes()
 
     glFlush()
@@ -68,7 +78,7 @@ def update_viewport(window, width, height):
 
 
 def main():
-    N = 400
+    N = 2500
     sqrtN = int(math.sqrt(N))
     # tab = [[0] * 3 for i in range(N) for j in range(N)]
     tab = []
@@ -76,13 +86,13 @@ def main():
     # obliczanie X, Y, Z:
     for i in range(sqrtN+1):
         u = i/sqrtN
-        for j in range(sqrtN+1):
+        for j in range(sqrtN):
             v = j/sqrtN
             print("(", u, " ", v, ")")
-            x = (-90*pow(u, 5) + 255*pow(u, 4) - 270*pow(u, 3) +
+            x = (-90*pow(u, 5) + 225*pow(u, 4) - 270*pow(u, 3) +
                  180*pow(u, 2) - 45*u)*math.cos(math.pi*v)
             y = (160*pow(u, 4) - 320*pow(u, 3) + 160*pow(u, 2) - 5)
-            z = (-90*pow(u, 5) + 255*pow(u, 4) - 270*pow(u, 3) +
+            z = (-90*pow(u, 5) + 225*pow(u, 4) - 270*pow(u, 3) +
                  180*pow(u, 2) - 45*u)*math.sin(math.pi*v)
             point = []
             point.append(x)
@@ -104,7 +114,7 @@ def main():
 
     startup()
     while not glfwWindowShouldClose(window):
-        render(glfwGetTime(), tab)
+        render(glfwGetTime(), tab, N)
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
