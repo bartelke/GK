@@ -48,7 +48,7 @@ def render(time, tab, sqrtN):
     spin(time * 180 / 3.1415)
 
     glColor3f(1.0, 0.9, 0.0)
-    glBegin(GL_LINES)
+    glBegin(GL_TRIANGLES)
     # for i in range(sqrtN*sqrtN):
     #     glVertex3f(tab[i][0], tab[i][1], tab[i][2])
 
@@ -59,8 +59,6 @@ def render(time, tab, sqrtN):
             glVertex3f(tab[i*sqrtN+j][0], tab[i*sqrtN+j][1], tab[i*sqrtN+j][2])
             glVertex3f(tab[i*sqrtN+j+1][0], tab[i*sqrtN+j+1]
                        [1], tab[i*sqrtN+j+1][2])
-
-            glVertex3f(tab[i*sqrtN+j][0], tab[i*sqrtN+j][1], tab[i*sqrtN+j][2])
             glVertex3f(tab[(i+1)*sqrtN+j][0], tab[(i+1)*sqrtN+j]
                        [1], tab[(i+1)*sqrtN+j][2])
     glEnd()
