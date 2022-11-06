@@ -58,7 +58,7 @@ def render(time, tab, sqrtN, colorTab):
         for j in range(sqrtN):
             v = j % sqrtN
 
-            if (iterator < sqrtN*sqrtN):
+            if (iterator <= sqrtN*sqrtN):
                 glColor3f(colorTab[iterator][0][0], colorTab[iterator]
                           [0][1], colorTab[iterator][0][2])
                 iterator += 1
@@ -76,6 +76,25 @@ def render(time, tab, sqrtN, colorTab):
                 iterator += 1
                 glVertex3f(tab[(i+1)*sqrtN+j][0], tab[(i+1)*sqrtN+j]
                            [1], tab[(i+1)*sqrtN+j][2])
+
+                # drugi trajangle:
+                glColor3f(colorTab[iterator][0][0], colorTab[iterator]
+                          [0][1], colorTab[iterator][0][2])
+                iterator += 1
+                glVertex3f(tab[(i+1)*sqrtN+j][0], tab[(i+1)*sqrtN+j]
+                           [1], tab[(i+1)*sqrtN+j][2])
+
+                glColor3f(colorTab[iterator][1][0], colorTab[iterator]
+                          [1][1], colorTab[0][1][2])
+                iterator += 1
+                glVertex3f(tab[(i+1)*sqrtN+j+1][0], tab[(i+1)*sqrtN+j+1]
+                           [1], tab[(i+1)*sqrtN+j+1][2])
+
+                glColor3f(colorTab[iterator][2][0], colorTab[iterator]
+                          [2][1], colorTab[iterator][2][2])
+                iterator += 1
+                glVertex3f(tab[i*sqrtN+j+1][0], tab[i*sqrtN+j+1]
+                           [1], tab[i*sqrtN+j+1][2])
             else:
                 iterator = 0
     glEnd()
@@ -111,7 +130,7 @@ def main():
     tab = []
 
     # obliczanie X, Y, Z:
-    for i in range(sqrtN+1):
+    for i in range(sqrtN+2):
         u = i/sqrtN
         for j in range(sqrtN):
             v = j/sqrtN
