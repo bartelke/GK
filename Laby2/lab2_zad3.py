@@ -6,6 +6,7 @@ from glfw.GLFW import *
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import random
 
 
 def spin(angle):
@@ -42,7 +43,7 @@ def axes():
     glEnd()
 
 
-def render(time, tab, sqrtN):
+def render(time, tab, sqrtN, colorTab):
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
     spin(time * 180 / 3.1415)
@@ -51,16 +52,32 @@ def render(time, tab, sqrtN):
     glBegin(GL_TRIANGLES)
     # for i in range(sqrtN*sqrtN):
     #     glVertex3f(tab[i][0], tab[i][1], tab[i][2])
-
+    iterator = 0
     for i in range(sqrtN):
         u = i
         for j in range(sqrtN):
             v = j % sqrtN
-            glVertex3f(tab[i*sqrtN+j][0], tab[i*sqrtN+j][1], tab[i*sqrtN+j][2])
-            glVertex3f(tab[i*sqrtN+j+1][0], tab[i*sqrtN+j+1]
-                       [1], tab[i*sqrtN+j+1][2])
-            glVertex3f(tab[(i+1)*sqrtN+j][0], tab[(i+1)*sqrtN+j]
-                       [1], tab[(i+1)*sqrtN+j][2])
+
+            if (iterator < sqrtN*sqrtN):
+                glColor3f(colorTab[iterator][0][0], colorTab[iterator]
+                          [0][1], colorTab[iterator][0][2])
+                iterator += 1
+                glVertex3f(tab[i*sqrtN+j][0], tab[i*sqrtN+j]
+                           [1], tab[i*sqrtN+j][2])
+
+                glColor3f(colorTab[iterator][1][0], colorTab[iterator]
+                          [1][1], colorTab[0][1][2])
+                iterator += 1
+                glVertex3f(tab[i*sqrtN+j+1][0], tab[i*sqrtN+j+1]
+                           [1], tab[i*sqrtN+j+1][2])
+
+                glColor3f(colorTab[iterator][2][0], colorTab[iterator]
+                          [2][1], colorTab[iterator][2][2])
+                iterator += 1
+                glVertex3f(tab[(i+1)*sqrtN+j][0], tab[(i+1)*sqrtN+j]
+                           [1], tab[(i+1)*sqrtN+j][2])
+            else:
+                iterator = 0
     glEnd()
     axes()
 
@@ -104,18 +121,30 @@ def main():
             y = (160*pow(u, 4) - 320*pow(u, 3) + 160*pow(u, 2) - 5)
             z = (-90*pow(u, 5) + 225*pow(u, 4) - 270*pow(u, 3) +
                  180*pow(u, 2) - 45*u)*math.sin(math.pi*v)
+
             point = []
             point.append(x)
             point.append(y)
             point.append(z)
             tab.append(point)
 
-    # zarys petelki do odczytu indeksow:
-    # for i in range(sqrtN + 1):
-    #     u = i
-    #     for j in range(sqrtN):
-    #         v = j % sqrtN
-    #         print("(", u, " ", v, ")")
+    # kolory:
+    colorTab = []
+
+    for i in range(sqrtN*(sqrtN+1)):
+        triangleColors = []
+
+        color1 = [random.uniform(0.0, 1.0), random.uniform(
+            0.0, 1.0), random.uniform(0.0, 1.0)]
+        color2 = [random.uniform(0.0, 1.0), random.uniform(
+            0.0, 1.0), random.uniform(0.0, 1.0)]
+        color3 = [random.uniform(0.0, 1.0), random.uniform(
+            0.0, 1.0), random.uniform(0.0, 1.0)]
+
+        triangleColors.append(color1)
+        triangleColors.append(color2)
+        triangleColors.append(color3)
+        colorTab.append(triangleColors)
 
     if not glfwInit():
         sys.exit(-1)
@@ -131,7 +160,7 @@ def main():
 
     startup()
     while not glfwWindowShouldClose(window):
-        render(glfwGetTime(), tab, sqrtN)
+        render(glfwGetTime(), tab, sqrtN, colorTab)
         glfwSwapBuffers(window)
         glfwPollEvents()
     shutdown()
