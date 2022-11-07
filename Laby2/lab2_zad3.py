@@ -7,6 +7,7 @@ from glfw.GLFW import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 import random
+from playsound import playsound
 
 
 def spin(angle):
@@ -178,6 +179,7 @@ def main():
     glfwSwapInterval(1)
 
     startup()
+    playsound("Spin_me_right_round.mp3")
     while not glfwWindowShouldClose(window):
         render(glfwGetTime(), tab, sqrtN, colorTab)
         glfwSwapBuffers(window)

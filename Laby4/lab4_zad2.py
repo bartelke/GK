@@ -5,6 +5,7 @@ from glfw.GLFW import *
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import time
 
 
 viewer = [0.0, 0.0, 10.0]
@@ -155,13 +156,16 @@ def mouse_button_callback(window, button, action, mods):
     global left_mouse_button_pressed
     global right_mouse_button_pressed
 
-    if button == GLFW_MOUSE_BUTTON_LEFT and action == GLFW_PRESS:
-        left_mouse_button_pressed = 1
-    elif button == GLFW_MOUSE_BUTTON_RIGHT and action == GLFW_PRESS:
-        right_mouse_button_pressed = 1
-    else:
-        left_mouse_button_pressed = 0
-        right_mouse_button_pressed = 0
+    if button == GLFW_MOUSE_BUTTON_LEFT:
+        if action == GLFW_PRESS:
+            left_mouse_button_pressed = 1
+        else:
+            left_mouse_button_pressed = 0
+    if button == GLFW_MOUSE_BUTTON_RIGHT:
+        if action == GLFW_PRESS:
+            right_mouse_button_pressed = 1
+        else:
+            right_mouse_button_pressed = 0
 
 
 def main():
