@@ -18,6 +18,7 @@ left_mouse_button_pressed = 0
 mouse_x_pos_old = 0
 mouse_y_pos_old = 0
 delta_x = 0
+scale = 1.5
 
 
 def startup():
@@ -101,6 +102,13 @@ def render(time):
     glRotatef(theta, 0.0, 1.0, 0.0)
 
     axes()
+    if right_mouse_button_pressed:
+        glScale(scale, scale, scale)
+
+    elif left_mouse_button_pressed and right_mouse_button_pressed:
+        theta += delta_x * pix2angle
+        phi += delta_y * pix2angle
+        glScale(scale, scale, scale)
     example_object()
 
     glFlush()
@@ -150,9 +158,10 @@ def mouse_button_callback(window, button, action, mods):
     if button == GLFW_MOUSE_BUTTON_LEFT and action == GLFW_PRESS:
         left_mouse_button_pressed = 1
     elif button == GLFW_MOUSE_BUTTON_RIGHT and action == GLFW_PRESS:
-        print("right")
+        right_mouse_button_pressed = 1
     else:
         left_mouse_button_pressed = 0
+        right_mouse_button_pressed = 0
 
 
 def main():
