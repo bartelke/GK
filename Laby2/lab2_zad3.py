@@ -46,7 +46,7 @@ def axes():
 def render(time, tab, sqrtN, colorTab):
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
-    spin(time * 180 / 3.1415)
+    spin(time * 90 / 3.1415)
 
     glColor3f(1.0, 0.9, 0.0)
     glBegin(GL_TRIANGLES)
