@@ -179,7 +179,7 @@ def main():
     glfwSwapInterval(1)
 
     startup()
-    playsound("Spin_me_right_round.mp3")
+   # playsound("Spin_me_right_round.mp3")
     while not glfwWindowShouldClose(window):
         render(glfwGetTime(), tab, sqrtN, colorTab)
         glfwSwapBuffers(window)
