@@ -6,6 +6,10 @@ from math import *
 
 viewer = [0.0, 0.0, 10.0]
 
+# zmienne do wyboru skladowej wartosci:
+selected = 1
+valueNumber = 1
+
 theta = 0.0
 phi = 0.0
 pix2angle = 1.0
@@ -102,8 +106,73 @@ def render(time):
 
 
 def keyboard_key_callback(window, key, scancode, action, mods):
+    global light_ambient
+    global selected
+    global valueNumber
+
     if key == GLFW_KEY_ESCAPE and action == GLFW_PRESS:
         glfwSetWindowShouldClose(window, GLFW_TRUE)
+
+    # wybor skladowej:
+    if key == GLFW_KEY_1 and action == GLFW_PRESS:
+        selected = 1
+        print("Wybrano light ambient")
+    if key == GLFW_KEY_2 and action == GLFW_PRESS:
+        selected = 2
+        print("Wybrano light diffuse")
+    if key == GLFW_KEY_3 and action == GLFW_PRESS:
+        selected = 3
+        print("Wybrano light specular")
+
+    # wybor wartosci do modyfikowania:
+    if key == GLFW_KEY_7 and action == GLFW_PRESS:
+        valueNumber = 0
+        print(valueNumber)
+    if key == GLFW_KEY_8 and action == GLFW_PRESS:
+        valueNumber = 1
+        print(valueNumber)
+    if key == GLFW_KEY_9 and action == GLFW_PRESS:
+        valueNumber = 2
+        print(valueNumber)
+    if key == GLFW_KEY_0 and action == GLFW_PRESS:
+        valueNumber = 3
+        print(valueNumber)
+
+    if selected == 1:
+        # modyfikacja light ambient:
+        if key == GLFW_KEY_UP and action == GLFW_PRESS:
+            if light_ambient[valueNumber] < 0.9:
+                light_ambient[valueNumber] += 0.1
+                startup()
+
+        if key == GLFW_KEY_DOWN and action == GLFW_PRESS:
+            if light_ambient[valueNumber] > 0.1:
+                light_ambient[valueNumber] -= 0.1
+                startup()
+
+    if selected == 2:
+        # modyfikacja light diffuse:
+        if key == GLFW_KEY_UP and action == GLFW_PRESS:
+            if light_diffuse[valueNumber] < 0.9:
+                light_diffuse[valueNumber] += 0.1
+                startup()
+
+        if key == GLFW_KEY_DOWN and action == GLFW_PRESS:
+            if light_diffuse[valueNumber] > 0.1:
+                light_diffuse[valueNumber] -= 0.1
+                startup()
+
+    if selected == 3:
+        # modyfikacja light specular:
+        if key == GLFW_KEY_UP and action == GLFW_PRESS:
+            if light_specular[valueNumber] < 0.9:
+                light_specular[valueNumber] += 0.1
+                startup()
+
+        if key == GLFW_KEY_DOWN and action == GLFW_PRESS:
+            if light_specular[valueNumber] > 0.1:
+                light_specular[valueNumber] -= 0.1
+                startup()
 
 
 def update_viewport(window, width, height):
