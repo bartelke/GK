@@ -21,8 +21,6 @@ mouse_y_pos_old = 0
 delta_x = 0
 delta_y = 0
 
-visible = True
-
 mat_ambient = [1.0, 1.0, 1.0, 1.0]
 mat_diffuse = [1.0, 1.0, 1.0, 1.0]
 mat_specular = [1.0, 1.0, 1.0, 1.0]
@@ -67,7 +65,7 @@ def startup():
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
-    image = Image.open("tekstura.tga")
+    image = Image.open("dawid.tga")
 
     glTexImage2D(
         GL_TEXTURE_2D, 0, 3, image.size[0], image.size[1], 0,
@@ -82,7 +80,6 @@ def shutdown():
 def render(time):
     global theta
     global phi
-    global visible
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
@@ -112,24 +109,14 @@ def render(time):
     glEnd()
 
     # sciana (przednia):
-    if visible == True:
-        glBegin(GL_TRIANGLES)
-        glTexCoord2f(0.0, 0.0)
-        glVertex3f(-3.0, 0.0, 3.0)
-        glTexCoord2f(1.0, 0.0)
-        glVertex3f(3.0, 0.0, 3.0)
-        glTexCoord2f(0.5, 1.0)
-        glVertex3f(0.0, 3.0, 0.0)
-        glEnd()
-    else:
-        glBegin(GL_TRIANGLES)
-        glTexCoord2f(1.0, 0.0)
-        glVertex3f(3.0, 0.0, 3.0)
-        glTexCoord2f(0.0, 0.0)
-        glVertex3f(-3.0, 0.0, 3.0)
-        glTexCoord2f(0.5, 1.0)
-        glVertex3f(0.0, 3.0, 0.0)
-        glEnd()
+    glBegin(GL_TRIANGLES)
+    glTexCoord2f(0.0, 0.0)
+    glVertex3f(-3.0, 0.0, 3.0)
+    glTexCoord2f(1.0, 0.0)
+    glVertex3f(3.0, 0.0, 3.0)
+    glTexCoord2f(0.5, 1.0)
+    glVertex3f(0.0, 3.0, 0.0)
+    glEnd()
 
     # sciana (lewa):
     glBegin(GL_TRIANGLES)
@@ -183,15 +170,8 @@ def update_viewport(window, width, height):
 
 
 def keyboard_key_callback(window, key, scancode, action, mods):
-    global visible
-
     if key == GLFW_KEY_ESCAPE and action == GLFW_PRESS:
         glfwSetWindowShouldClose(window, GLFW_TRUE)
-
-    if key == GLFW_KEY_1 and action == GLFW_PRESS:
-        visible = True
-    if key == GLFW_KEY_2 and action == GLFW_PRESS:
-        visible = False
 
 
 def mouse_motion_callback(window, x_pos, y_pos):
