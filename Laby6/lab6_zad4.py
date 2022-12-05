@@ -21,6 +21,8 @@ mouse_y_pos_old = 0
 delta_x = 0
 delta_y = 0
 
+switch = 1
+
 mat_ambient = [1.0, 1.0, 1.0, 1.0]
 mat_diffuse = [1.0, 1.0, 1.0, 1.0]
 mat_specular = [1.0, 1.0, 1.0, 1.0]
@@ -36,7 +38,7 @@ att_linear = 0.05
 att_quadratic = 0.001
 
 
-def startup():
+def startup(image):
     update_viewport(None, 400, 400)
     glClearColor(0.0, 0.0, 0.0, 1.0)
     glEnable(GL_DEPTH_TEST)
@@ -64,8 +66,6 @@ def startup():
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-
-    image = Image.open("dawid2.tga")
 
     glTexImage2D(
         GL_TEXTURE_2D, 0, 3, image.size[0], image.size[1], 0,
@@ -170,8 +170,23 @@ def update_viewport(window, width, height):
 
 
 def keyboard_key_callback(window, key, scancode, action, mods):
+    global switch
+    # zmiana tekstur:
+    image = Image.open("dawid2.tga")
+    image2 = Image.open("pat_mat.tga")
+
     if key == GLFW_KEY_ESCAPE and action == GLFW_PRESS:
         glfwSetWindowShouldClose(window, GLFW_TRUE)
+
+    if key == GLFW_KEY_1 and action == GLFW_PRESS:
+        switch = 1
+    if key == GLFW_KEY_2 and action == GLFW_PRESS:
+        switch = 0
+
+    if switch == 1:
+        startup(image2)
+    else:
+        startup(image)
 
 
 def mouse_motion_callback(window, x_pos, y_pos):
@@ -199,6 +214,8 @@ def mouse_button_callback(window, button, action, mods):
 
 
 def main():
+    global switch
+
     if not glfwInit():
         sys.exit(-1)
 
@@ -214,7 +231,6 @@ def main():
     glfwSetMouseButtonCallback(window, mouse_button_callback)
     glfwSwapInterval(1)
 
-    startup()
     while not glfwWindowShouldClose(window):
         render(glfwGetTime())
         glfwSwapBuffers(window)
