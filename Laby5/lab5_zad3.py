@@ -81,20 +81,20 @@ def render(time):
     glRotatef(phi, 1.0, 0.0, 0.0)
 
     # ustalenie light position:
-    xs = R * cos(2*pi*theta/360) * cos(2*pi*phi/360)
-    ys = R * sin(2*pi*phi/360)
-    zs = R * sin(2*pi*theta/360) * cos(2*pi*phi/360)
-    glTranslate(xs, ys, zs)
+    x = R * cos(2*pi*theta/360) * cos(2*pi*phi/360)
+    y = R * sin(2*pi*phi/360)
+    z = R * sin(2*pi*theta/360) * cos(2*pi*phi/360)
+    glTranslate(x, y, z)
 
-    light_position[0] = xs
-    light_position[1] = ys
-    light_position[2] = zs
+    light_position[0] = x
+    light_position[1] = y
+    light_position[2] = z
     glLightfv(GL_LIGHT0, GL_POSITION, light_position)
 
     # sfera do pokazania pozycji zrodla swiatla:
     quadric = gluNewQuadric()
     gluQuadricDrawStyle(quadric, GLU_LINE)
-    gluSphere(quadric, 0.5, 6, 5)
+    gluSphere(quadric, 0.5, 5, 5)
     gluDeleteQuadric(quadric)
 
     # pobieranie theta i phi:
